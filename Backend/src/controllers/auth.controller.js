@@ -6,6 +6,8 @@ import bcrypt from "bcryptjs";
 export const signup = async (req, res) => {
   const { fullname, email, password } = req.body;
 
+  
+
   try {
     if (!fullname || !email || !password) {
       return res.staus(400).json({
@@ -49,11 +51,13 @@ export const signup = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    
+
 
     if (newUser) {
+
+      const saveUser = await newUser.save();
       generateToken(newUser._id, res);
-      await newUser.save();
+
       res.status(201).json({
         _id: newUser._id,
         fullname: newUser.fullname,
