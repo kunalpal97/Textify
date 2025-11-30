@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-
     email: {
       type: String,
       require: true,
@@ -27,9 +26,8 @@ const userSchema = new mongoose.Schema(
   { timestamps: true } //createdAt & updatedAt to user
 );
 
-// last login and there date 
+// last login and there date
 
-
-const User = mongoose.model("User" , userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
