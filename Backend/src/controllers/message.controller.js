@@ -48,7 +48,7 @@ export const getChatPartners = async (req, res) => {
     }).select("-password");
 
     res.status(200).json({ chatPartners });
-    
+
   } catch (error) {
     console.log("Error get Chat partners controller :", error);
     res.status(500).json({
@@ -94,10 +94,25 @@ export const sendMessage = async (req, res) => {
     const { id: receiverId } = req.params;
 
     const senderId = req.user._id;
+
     if (!text && !image) {
       return res.status(400).json({
-        message: "Message cannot be empty",
+        message: "Text or Message any one should be there Okay! It can't be Empty",
       });
+    }
+
+    if(senderId.equals(receiverId)){
+        return res.status(400).json({
+            message : "Can not send message to yourself",
+        })
+    }
+
+    const receiverExist = await User.exists({_id : receiverId});
+
+    if(!receiverExist){
+        return res.status(404).json({
+            message :"Recevier is not found",
+        })
     }
 
     let imageUrl = null;
