@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
 import { brevoTransporter } from "../lib/brevoTransporter.js";
 import { createWelcomeEmailTemplate } from "./emailTamplates.js";
 import { ENV } from "../lib/env.js";
-dotenv.config();
+
 
 export const sendWelcomeEmail = async (email, name, CLIENT_URL) => {
     
