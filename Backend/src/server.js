@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json()); // req.body mai..jo bhajege wo aayega idhar pe
 app.use(cors({
-  origin : ENV.CLIENT_URL,
+  origin : [ENV.CLIENT_URL , ENV.CLIENT_URL_PROD],
   credentials : true,
 }));
 app.use(cookieParser()); // used when you create a middle ware like protected rotutie project 
