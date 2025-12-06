@@ -1,15 +1,21 @@
-import React from "react";
-import { Routes, Route } from "react-router";
+import React, { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router";
 import ChatPage from "./pages/ChatPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import { useAuthStore } from "./store/usAuthStore";
+import { useAuthStore } from "./store/useAuthStore";
+import PageLoader from "./components/PageLoader";
+import { Toaster } from "react-hot-toast";
 
 export const App = () => {
+  const { authUser, isCheckingAuth, checkAuth } = useAuthStore();
 
-  const {authUser , isLoggedIn , login} = useAuthStore();
-  console.log("is Auth User ", authUser);
-  console.log("is user LoggedIn ", isLoggedIn);
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+
+  if (isCheckingAuth) return <PageLoader />;
 
   return (
     <div
@@ -28,8 +34,7 @@ export const App = () => {
       <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(currentColor_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none"></div>
 
       {/* Soft gradient overlay */}
-      <div
-        className=" absolute inset-0 bg-gradient-to-br from-primary/10 via-base-100/20 to-secondary/10 pointer-events-none"></div>
+      <div className=" absolute inset-0 bg-gradient-to-br from-primary/10 via-base-100/20 to-secondary/10 pointer-events-none"></div>
 
       {/* Top-left blob */}
       <div className="absolute -top-20 -left-20 w-72 h-72 bg-primary/30 blur-[120px] rounded-full pointer-events-none"></div>
@@ -37,13 +42,23 @@ export const App = () => {
       {/* Bottom-right blob */}
       <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-secondary/30 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <button className="btn btn-primary px-8" onClick={login}>Login</button>
       <Routes>
-        <Route path="/" element={<ChatPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route
+          path="/"
+          element={authUser ? <ChatPage /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/login"
+          element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/signup"
+          element={!authUser ? <SignUpPage /> : <Navigate to={"/"} />}
+        />
       </Routes>
 
+
+    <Toaster position="top-center" />  
     </div>
   );
 };
