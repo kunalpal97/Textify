@@ -153,6 +153,7 @@ export const updateProfile = async (req, res) => {
 
     const userId = req.user._id;
 
+    // Upload base64 image to Cloudinary
     const uploadResponse = await cloudinary.uploader.upload(profilePic);
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -160,16 +161,14 @@ export const updateProfile = async (req, res) => {
       {
         profilePic: uploadResponse.secure_url,
       },
-      {
-        new: true,
-      }
+      { new: true }
     );
 
     res.status(200).json(updatedUser);
+
   } catch (error) {
     console.log("Error in update Profile middleware : ", error);
-    res.status(500).json({
-      message: "Internal Server error",
-    });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
+

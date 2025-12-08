@@ -12,7 +12,8 @@ import messageRoutes from "./routes/message.route.js";
 const PORT = ENV.PORT || 3000;
 const app = express();
 
-app.use(express.json()); // req.body mai..jo bhajege wo aayega idhar pe
+app.use(express.json({limit : "10mb"})); // req.body mai..jo bhajege wo aayega idhar pe
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cors({
   origin : [ENV.CLIENT_URL , ENV.CLIENT_URL_PROD],
   credentials : true,
