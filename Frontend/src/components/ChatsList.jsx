@@ -4,8 +4,7 @@ import UsersLoadingSkeleton from "./UsersLoadingSkeleton.jsx";
 import NoChatsFound from "./NoChatsFound.jsx";
 
 function ChatList() {
-  const { getMyChatPartners, chats, isUsersLoading, setSelectedUser } =
-    useChatStore();
+  const { getMyChatPartners, chats, isUsersLoading, setSelectedUser } = useChatStore();
 
   useEffect(() => {
     getMyChatPartners();
@@ -18,27 +17,30 @@ function ChatList() {
   return (
     <>
       {chats.map((chat) => (
-        <div
-          key={chat._id}
-          className="bg-cyan-500/10 p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20 transition-colors"
-          onClick={() => setSelectedUser(chat)}
+        <div key={chat._id}
+
+          className="bg-cyan-500/10 p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20
+           transition-colors"
+           onClick={() => setSelectedUser(chat)}
         >
           <div className="flex items-center gap-3">
 
-            {/* This has to be fixed when user is online then only here online status can be seen using with web soket */}
+            {/* Here we have to check that the status is not always online when user is actually online then only */}
+            
             <div className={`avatar online`}>
+
               <div className="size-12 rounded-full">
-                <img
-                  src={chat.profilePic || "/avatar.png"}
-                  alt={chat.fullname}
-                />
+
+                <img src={chat.profilePic || "/avatar.png"} alt={chat.fullname} />
+
               </div>
+
             </div>
 
-            <h4 className="text-slate-200 font-medium truncate">
-              {chat.fullname}
-            </h4>
+            <h4 className="text-slate-200 font-medium truncate">{chat.fullname}</h4>
+
           </div>
+
         </div>
       ))}
     </>
