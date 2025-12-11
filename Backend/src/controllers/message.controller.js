@@ -9,7 +9,7 @@ export const getAllContacts = async (req, res) => {
       _id: { $ne: loggedInUserId },
     }).select("-password");
 
-    res.status(200).json({ filterUsers });
+    res.status(200).json(filterUsers);
   } catch (error) {
     console.log("Error in Get All user Controller ", error);
     res.status(500).json({
@@ -47,7 +47,7 @@ export const getChatPartners = async (req, res) => {
       _id: { $in: chatPartnerIds },
     }).select("-password");
 
-    res.status(200).json({ chatPartners });
+    res.status(200).json(chatPartners);
 
   } catch (error) {
     console.log("Error get Chat partners controller :", error);
@@ -79,7 +79,7 @@ export const getMessageByUserId = async (req, res) => {
         },
       ],
     });
-    res.status(200).json({ messages });
+    res.status(200).json(messages);
   } catch (error) {
     console.log("Error in Get message by User ID in controller");
     res.status(500).json({
@@ -107,7 +107,7 @@ export const sendMessage = async (req, res) => {
         })
     }
 
-    const receiverExist = await User.exists({_id : receiverId});
+    const receiverExist = await User.exists({ _id : receiverId });
 
     if(!receiverExist){
         return res.status(404).json({
