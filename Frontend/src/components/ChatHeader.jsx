@@ -6,19 +6,17 @@ function ChatHeader() {
   const { selectedUser, setSelectedUser } = useChatStore();
 
   useEffect(() => {
-
     const handleEscKey = (e) => {
-        if(e.key === "Escape") setSelectedUser(null);
-    }
+      if (e.key === "Escape") setSelectedUser(null);
+    };
 
-
-    window.addEventListener("keydown" , handleEscKey);
+    window.addEventListener("keydown", handleEscKey);
 
     // clean up method
 
     return () => {
-        window.removeEventListener("keydown" , handleEscKey);
-    }
+      window.removeEventListener("keydown", handleEscKey);
+    };
   }, [setSelectedUser]);
 
   return (
@@ -37,15 +35,16 @@ function ChatHeader() {
         </div>
 
         <div>
-            <h3 className="text-slate-200 font-medium">{selectedUser.fullname}</h3>
-            <p className="text-slate-400 text-xs">Online</p>
+          <h3 className="text-slate-200 font-medium">
+            {selectedUser.fullname}
+          </h3>
+          <p className="text-slate-400 text-xs">Online</p>
         </div>
       </div>
 
       <button onClick={() => setSelectedUser(null)}>
         <XIcon className="w-5 h-5 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" />
       </button>
-
     </div>
   );
 }
