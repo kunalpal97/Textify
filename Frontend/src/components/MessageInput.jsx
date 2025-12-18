@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
-import useKeyboardSound from "../hooks/useKeyboardSound";
+import useKeyboardSound from "../hooks/useKeyboardSound.js";
 import { useChatStore } from "../store/useChatStore";
 import toast from "react-hot-toast";
 import { ImageIcon, SendIcon, XIcon } from "lucide-react";
 
 function MessageInput() {
-  const { ...playRandomKeyStrokeSound } = useKeyboardSound();
+  const  playRandomKeyStrokeSound  = useKeyboardSound();
 
   const [text, setText] = useState("");
 
@@ -20,7 +20,7 @@ function MessageInput() {
 
     if (text.trim() === "" && !imagePreview) return;
 
-    if (isSoundEnabled) playRandomKeyStrokeSound();
+    if (isSoundEnabled)  playRandomKeyStrokeSound();
 
     sendMessage({
       text: text.trim(), // extra space trim kar dega eg hi           kaise ho ko => hi kaise ho ko kar dega
@@ -106,7 +106,7 @@ function MessageInput() {
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className={`bg-slate-800/50 text-slate-400 hover:bg-slate-200 rounded-lgpx-4 transition-colors ${
+          className={`bg-slate-800/50 text-slate-300 hover:bg-slate-500 rounded-lg px-4 transition-colors ${
             imagePreview ? "text-cyan-500" : ""
           }`}
         >

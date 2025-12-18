@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useChatStore } from '../store/useChatStore.js'
 import UsersLoadingSkeleton from './UsersLoadingSkeleton.jsx';
+import { useAuthStore } from '../store/useAuthStore.js';
 
 function ContactList() {
 
   const { getAllContacts , allContacts , setSelectedUser , isUsersLoading } = useChatStore();
+  const {onlineUsers} = useAuthStore();
 
   useEffect(() => {
     getAllContacts();
@@ -25,7 +27,7 @@ function ContactList() {
 
             {/* This has to be fixed when user is online then only here online status can be seen using with web soket.io  */}
             
-            <div className={`avatar online`}>
+            <div className={`avatar ${onlineUsers.includes(contact._id) ? "online" : "offline"}`}>
               <div className="size-12 rounded-full">
                 <img
                   src={contact.profilePic || "/avatar.png"}
